@@ -1,0 +1,28 @@
+unpacked binary structures
+namespaces
+calls to C
+explicit integer types
+
+Variable declaration:
+result ~ sint32_t;
+counter ~ uint8_t(0);
+
+Type syntax:
+[su]int([1-9]?[0-9]*)_t -> n-bit [un]signed integer
+* -> untyped pointer
+typename_t* -> pointer to typename_t
+@(int, int; bool) -> function taking two integer parameters and returning bool
+
+
+External declaration:
+memset ~ @(* ptr, int value, uint32_t num; *) extern;
+
+Structure definition:
+.linkedlist_t [
+	value ~ *
+	next ~ linkedlist_t*
+]
+
+head ~ linkedlist_t;
+head.value = 0;
+head.next = &head;

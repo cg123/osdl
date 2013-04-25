@@ -25,6 +25,7 @@
 import sys
 
 from . import tokenizer
+from . import parser
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
@@ -36,5 +37,6 @@ if __name__ == '__main__':
         f = open(sys.argv[1], 'r')
     data = f.read()
     f.close()
-    for token in tokenizer.tokenize(data):
-        print(token.repr())
+    parser = parser.Parser(tokenizer.tokenize(data))
+    while True:
+        print(parser.parse())

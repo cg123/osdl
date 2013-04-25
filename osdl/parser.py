@@ -21,3 +21,63 @@
 # CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
+
+from . import tokenizer
+
+
+class ASTNode(object):
+    def __init__(self, source=None):
+        self.source = source
+
+
+class IntegerASTNode(ASTNode):
+    def __init__(self, value, source=None):
+        self.source = source
+        self.val_int = value
+
+
+class FloatASTNode(ASTNode):
+    def __init__(self, value, source=None):
+        self.source = source
+        self.val_float = value
+
+
+class ReferenceASTNode(ASTNode):
+    def __init__(self, name, source=None):
+        self.source = source
+        self.name = name
+
+
+class BinaryOpASTNode(ASTNode):
+    def __init__(self, op, lh, rh, source=None):
+        self.source = source
+        self.operator = op
+        self.lh = lh
+        self.rh = rh
+
+
+class StructureASTNode(ASTNode):
+    def __init__(self, name, fields, source=None):
+        self.source = source
+        self.name = name
+        self.fields = fields
+
+
+class Parser(object):
+    def __init__(self, tokens):
+        self.tokens = tokens
+        self.next()
+
+    def next(self):
+        self.current = next(self.tokens)
+
+    def parse(self):
+        if isinstance(self.current, tokenizer.IntToken):
+            res = IntegerASTNode(self.current.val_int, self.current.location)
+            self.next()
+            return res
+        elif isinstance(self.current, tokenizer.FloatToken):
+            res = FloatASTNode(self.current.val_float, self.current.location)
+            self.next()
+            return res
+        raise NotImplementedError("welp (%r)" % self.current)

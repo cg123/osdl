@@ -33,10 +33,17 @@ if __name__ == '__main__':
         sys.exit(1)
     if sys.argv[1] == '-':
         f = sys.stdin
+        filename = '<stdin>'
     else:
         f = open(sys.argv[1], 'r')
+        filename = sys.argv[1]
     data = f.read()
     f.close()
-    parser = parser.Parser(tokenizer.tokenize(data))
+    p = parser.Parser(tokenizer.tokenize(data, filename))
     while True:
-        print(parser.expression())
+        try:
+            print(p.expression())
+        except parser.ParseError as e:
+            print('!! At %s, line %d column %d:' % e.location)
+            print('\t%s' % e.message)
+            break

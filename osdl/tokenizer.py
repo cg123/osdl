@@ -27,11 +27,18 @@ import re
 
 
 class Token(object):
+    _tokentype = 'NULLTOKEN'
+
+    def tokentype(self):
+        return self._tokentype
+
     def __init__(self, location=None):
         self.location = location
 
 
 class IntToken(Token):
+    _tokentype = 'int'
+
     def __init__(self, value, location=None):
         self.val_int = value
         self.location = location
@@ -65,6 +72,8 @@ class IntToken(Token):
 
 
 class FloatToken(Token):
+    _tokentype = 'float'
+
     def __init__(self, value, location=None):
         self.val_float = value
         self.location = location
@@ -89,6 +98,8 @@ class FloatToken(Token):
 
 
 class IdentifierToken(Token):
+    _tokentype = 'identifier'
+
     def __init__(self, value, location=None):
         self.val_str = value
         self.location = location
@@ -111,6 +122,8 @@ class IdentifierToken(Token):
 
 
 class CharacterToken(Token):
+    _tokentype = 'character'
+
     def __init__(self, value, location=None):
         self.val_str = value
         self.location = location
@@ -121,6 +134,8 @@ class CharacterToken(Token):
 
 
 class EOFToken(Token):
+    _tokentype = 'EOF'
+
     def repr(self):
         return 'EOFToken(%r)' % (self.location,)
     __repr__ = repr

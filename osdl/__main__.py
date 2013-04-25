@@ -39,4 +39,4 @@ if __name__ == '__main__':
     f.close()
     parser = parser.Parser(tokenizer.tokenize(data))
     while True:
-        print(parser.parse())
+        print(parser.expression())
